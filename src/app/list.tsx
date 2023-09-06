@@ -18,6 +18,7 @@ export default function List() {
         avatar?: string
     }]>([{}])
 
+    {/* Get data user */}
     const getData = (page?: number) => {
         setLoad(true)
         axios.get(process.env.NEXT_PUBLIC_BASE_API+'api/users?page='+page)
@@ -36,10 +37,14 @@ export default function List() {
 
     if (!load && (user.length > 1 || Object.keys(user[0]).length)) {
         return (<>
+
+            {/* Info */}
             <div className="flex gap-x-4 text-sm text-slate-500">
                 <h1>{perPage} in page</h1>
                 <h1>{total} in total</h1>
             </div>
+
+            {/* Users */}
             <div className="grid md:grid-cols-2 gap-4">
                 {user.map((item, i) => 
                     <div key={i} className="flex gap-x-4 p-4 rounded-md bg-slate-100 hover:bg-slate-200 
@@ -52,7 +57,10 @@ export default function List() {
                     </div>
                 )}
             </div>
+            
             <div className="flex justify-between items-center gap-x-4">
+
+                {/* Pagination */}
                 <div className="flex gap-x-4">
                     {[...Array(totalPages)].map((_, i) =>
                         <button key={i} onClick={() => setPage(i+1)} 
@@ -61,12 +69,16 @@ export default function List() {
                         text-sm font-semibold leading-6 tabular-nums`}>{i+1}</button>
                     )}
                 </div>
+
+                {/* Log out */}
                 <a href="/signup" rel="noopener noreferrer" onClick={() => deleteCookie('test-token')} 
                 className="text-sm text-red-700 hover:underline">Log out</a>
+                
             </div>
         </>)
     }
 
+    {/* Loading */}
     return (   
         <div className="bg-slate-100 overflow-hidden"><div className="w-3/4 h-1 bg-slate-200 animation-linear" /></div> 
     )
